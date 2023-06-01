@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IP Filtering</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        form {
+            margin: 20px auto;
+            width: 400px;
+            text-align: center;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            width: 100%;
+            height: 100px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 400px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>IP Filtering</h1>
+    <form method="POST">
+        <label for="ip_address">Select IP:</label>
+        <select name="ip_address" id="ip_address" multiple>
+            {% for ip in df['IP'] %}
+                <option value="{{ ip }}">{{ ip }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="option">Option:</label>
+        <input type="radio" name="option" value="include" checked> Include
+        <input type="radio" name="option" value="exclude"> Exclude
+        <br>
+        <input type="submit" value="Filter">
+    </form>
+
+    <hr>
+
+    {% if df.empty %}
+        <p>No data to display.</p>
+    {% else %}
+        <table>
+            <thead>
+                <tr>
+                    <th>New Message</th>
+                    <th>New ID</th>
+                    <th>Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for _, row in df.iterrows() %}
+                    <tr>
+                        <td>{{ row['MESSAGE'] }}</td>
+                        <td>{{ row['ID'] }}</td>
+                        <td>{{ row['RESPONSE'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
