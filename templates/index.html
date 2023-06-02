@@ -119,7 +119,8 @@
         {% else %}
             <table>
                 <thead>
-                    <tr>
+                    <tr>    
+                        <th>Sr.No</th>
                         <th>New Message</th>
                         <th>New ID</th>
                         <th>Response</th>
@@ -128,6 +129,7 @@
                 <tbody>
                     {% for _, row in df.iterrows() %}
                         <tr>
+                            <td>{{ loop.index }}</td>
                             <td>{{ row['MESSAGE'] }}</td>
                             <td>{{ row['ID'] }}</td>
                             <td>{{ row['RESPONSE'] }}</td>
